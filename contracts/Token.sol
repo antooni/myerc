@@ -45,7 +45,10 @@ contract Token is IERC20 {
     }
 
     function approve(address _spender, uint256 _value) public override returns (bool success) {
-        require(balanceOf[msg.sender] >= _value, "Your balance is too low to increase allowance");
+        
+        require((_value == 0) || (allowance[msg.sender][_spender] == 0),"You first have to set allowance to zero, to avoid race condition, or use increase/decrease Approval");
+
+        require(balanceOf[msg.sender] >= _value, "Your balance is too low to set allowance");
         require(_spender != address(0), "Cannot set allowance for zero-address");
         
         allowance[msg.sender][_spender] += _value;
@@ -53,6 +56,7 @@ contract Token is IERC20 {
 
         return true;
     }
+    
 
     modifier validDestination(address _to) {
         require(_to != address(0), "Cannot send tokens to 0x0 address");
