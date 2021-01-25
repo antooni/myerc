@@ -44,12 +44,10 @@ contract Token is IERC20 {
         return true;
     }
 
-    function approve(address _spender, uint256 _value) public override returns (bool success) {
-        
+    function approve(address _spender, uint256 _value) public override validSpender(_spender) returns (bool success) {
         require((_value == 0) || (allowance[msg.sender][_spender] == 0),"You first have to set allowance to zero, to avoid race condition, or use increase/decrease Approval");
 
         require(balanceOf[msg.sender] >= _value, "Your balance is too low to set allowance");
-        require(_spender != address(0), "Cannot set allowance for zero-address");
         
         allowance[msg.sender][_spender] += _value;
         emit Approval(msg.sender,_spender,allowance[msg.sender][_spender]);
@@ -57,12 +55,31 @@ contract Token is IERC20 {
         return true;
     }
     
+    function increaseAllowance(address _spender, uint256 _addedValue) public validSpender(_spender) returns (bool success) {
+        require(allowance[msg.sender][_spender] + _addedValue <= balanceOf[msg.sender], "Your balance is too low to set allowance");
+
+        allowance[msg.sender][_spender] += _addedValue;
+        return true;
+    }
+
+    function decreaseAllowance(address _spender, uint256 _subValue) public validSpender(_spender) returns (bool success) {
+        require(allowance[msg.sender][_spender] - _subValue >= 0, "Cannot set allowance smaller than zero");
+
+        allowance[msg.sender][_spender] -= _subValue;
+        return true;
+    }
 
     modifier validDestination(address _to) {
         require(_to != address(0), "Cannot send tokens to 0x0 address");
         require(_to != address(this), "Cannot send tokens to smart-contract's address");
         _;
     }
+
+    modifier validSpender(address _spender) {
+        require(_spender != address(0),"Cannot set allowance, spender cannot be 0x0 address");
+        _;
+    }
+
 
 }
 
