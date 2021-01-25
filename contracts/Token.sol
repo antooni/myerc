@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.7.0;
 
+import "hardhat/console.sol";
+
 import "./IERC20.sol";
 
 contract Token is IERC20 {
@@ -22,6 +24,7 @@ contract Token is IERC20 {
 
     function transfer(address _to, uint256 _value) public override validDestination(_to) returns (bool success) {
         require(balanceOf[msg.sender] >= _value, "Your balance is too low");
+
         balanceOf[msg.sender] -= _value;
         balanceOf[_to] += _value;
 
@@ -31,8 +34,8 @@ contract Token is IERC20 {
     }
 
     function transferFrom(address _from, address _to, uint256 _value) public override validDestination(_to) returns (bool success) {
-        require(balanceOf[_from] >= _value, "Owner balance is too low");
-        require(allowance[_from][msg.sender] >= _value, "Sender allowance is too low");
+        require(balanceOf[_from] >= _value, "Sender balance is too low");
+        require(allowance[_from][msg.sender] >= _value, "Spender allowance is too low");
 
         balanceOf[_from] -= _value;
         balanceOf[_to] += _value;
@@ -49,7 +52,7 @@ contract Token is IERC20 {
 
         require(balanceOf[msg.sender] >= _value, "Your balance is too low to set allowance");
         
-        allowance[msg.sender][_spender] += _value;
+        allowance[msg.sender][_spender] = _value;
         emit Approval(msg.sender,_spender,allowance[msg.sender][_spender]);
 
         return true;
@@ -59,13 +62,15 @@ contract Token is IERC20 {
         require(allowance[msg.sender][_spender] + _addedValue <= balanceOf[msg.sender], "Your balance is too low to set allowance");
 
         allowance[msg.sender][_spender] += _addedValue;
+        emit Approval(msg.sender,_spender,allowance[msg.sender][_spender]);
         return true;
     }
 
     function decreaseAllowance(address _spender, uint256 _subValue) public validSpender(_spender) returns (bool success) {
-        require(allowance[msg.sender][_spender] - _subValue >= 0, "Cannot set allowance smaller than zero");
+        require(allowance[msg.sender][_spender] >= _subValue, "Cannot set allowance smaller than zero");
 
         allowance[msg.sender][_spender] -= _subValue;
+        emit Approval(msg.sender,_spender,allowance[msg.sender][_spender]);
         return true;
     }
 
