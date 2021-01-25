@@ -70,30 +70,15 @@ describe("Token contract", function () {
   });
 
   describe("transfer()", function () {
-    it("Should transfer tokens between accounts", async function () {
-      // Transfer 50 tokens from owner to addr1
-      await myercToken.transfer(addr1.address, 50);
-      const addr1Balance = await myercToken.balanceOf(addr1.address);
-      expect(addr1Balance).to.equal(50);
+    it("Should transfer tokens and update balances", async function () {
 
-      // Transfer 50 tokens from addr1 to addr2
-      // We use .connect(signer) to send a transaction from another account
-      await myercToken.connect(addr1).transfer(addr2.address, 50);
-      const addr2Balance = await myercToken.balanceOf(addr2.address);
-      expect(addr2Balance).to.equal(50);
+      await expect(() => myercToken.transfer(addr1.address,50))
+        .to.changeTokenBalances(myercToken,[owner,addr1],[-50,50]);
+      
+      await expect(() => myercToken.connect(addr1).transfer(addr2.address,25))
+        .to.changeTokenBalances(myercToken,[addr1,addr2],[-25,25]);
+
     });
-
-    it("Should update balances after transfers", async function () {
-        const initialOwnerBalance = await myercToken.balanceOf(owner.address);
-  
-        await expect(() => myercToken.transfer(addr1.address,200)
-            .to.changeTokenBalance(myercToken,[owner,addr1],[initialOwnerBalance-200,200])
-        );
-
-        await expect(()=> myercToken.connect(addr1).transfer(addr2.transfer,17)
-            .to.changeTokenBalance(myercToken,[addr1,addr2],[200-17,17])
-        )
-      });
 
     it("Should emit Transfer event", async function() {
         await expect(myercToken.transfer(addr1.address,17))
@@ -102,45 +87,48 @@ describe("Token contract", function () {
     }); 
     
     it("Should fail if sender doesn’t have enough tokens", async function () {
-      const initialSenderBalance = await myercToken.balanceOf(owner.address);
+      const initialReceiverBalance = await myercToken.balanceOf(owner.address);
 
-      // Try to send 1 token from addr1 (0 tokens) to owner (1000 tokens).
-      // `require` will evaluate false and revert the transaction.
-      await expect(
-        myercToken.connect(addr1).transfer(owner.address, 1)
-      ).to.be.revertedWith("Your balance is too low");
+      await expect(myercToken.connect(addr1).transfer(owner.address, 1))
+        .to.be.revertedWith("Your balance is too low");
 
-      // Owner balance shouldn't have changed.
-      expect(await myercToken.balanceOf(owner.address)).to.equal(
-        initialSenderBalance
-      );
+      expect(await myercToken.balanceOf(owner.address))
+        .to.equal( initialReceiverBalance);
     });
 
     it("Should fail if receiver is a zero-address", async function() {
         const initialSenderBalance = await myercToken.balanceOf(owner.address);
 
-        await expect(
-            myercToken.transfer('0x0000000000000000000000000000000000000000',100)
-        ).to.be.revertedWith("Cannot send tokens to 0x0 address");
+        await expect(myercToken.transfer('0x0000000000000000000000000000000000000000',100))
+          .to.be.revertedWith("Cannot send tokens to 0x0 address");
 
-        expect(await myercToken.balanceOf(owner.address)).to.equal(
-            initialSenderBalance
-          );
+        expect(await myercToken.balanceOf(owner.address))
+          .to.equal(initialSenderBalance);
     });
 
     it("Should fail if receiver is a smart-contracts's address", async function() {
         const initialSenderBalance = await myercToken.balanceOf(owner.address);
 
-        await expect(
-            myercToken.transfer(myercToken.address,100)
-        ).to.be.revertedWith("Cannot send tokens to smart-contract's address");
+        await expect(myercToken.transfer(myercToken.address,100))
+          .to.be.revertedWith("Cannot send tokens to smart-contract's address");
 
-        expect(await myercToken.balanceOf(owner.address)).to.equal(
-            initialSenderBalance
-          );
+        expect(await myercToken.balanceOf(owner.address))
+          .to.equal(initialSenderBalance);
     });
   });
 
+  describe("transferFrom()", function () {
+    //should send
+    //should decrease allowance
+
+    //should fail if balance too low
+    //should fail if allowance too low
+    //should fail if recievevr is 0x0 address
+    //should fail if reciver is token address
+
+    //should emit Transfer and Approval
+
+  });
   
 
 });
