@@ -44,7 +44,9 @@ describe("Token contract", function () {
 
     it("Should set totalSupply", async function() {
         const totalSupply = await myercToken.totalSupply();
-        expect(totalSupply).to.equal(17000000);
+        const initialSupply = BigInt(17000000);
+        const decimals = BigInt(10**18)
+        expect(totalSupply).to.equal(initialSupply*decimals);
     })
 
     it("Should transfer the total supply of tokens to the owner", async function () {

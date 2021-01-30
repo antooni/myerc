@@ -18,7 +18,7 @@ contract Token is IERC20 {
         name = "myerc";
         symbol = "MYE";
         decimals = 18;
-        totalSupply = 17000000;
+        totalSupply = uint256(17000000) * 10 **uint256(decimals);
         balanceOf[msg.sender] = totalSupply;
     }
 
