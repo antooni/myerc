@@ -2,20 +2,32 @@ import './App.css';
 
 import React, { useState, useEffect } from 'react';
 import { ethers } from "ethers";
+import { Card, EthAddress, Box, MetaMaskButton } from 'rimble-ui';
+import NavBar from './components/Navbar';
+import Main from './components/Main'
+
 
 function App() {
 
-  const [balance, setBalance] = useState()
+  const [balance, setBalance] = useState('')
+  const [address, setAddress] = useState('')
 
-  useEffect(() => {
-    loadBlockchainData()
-  }, [])
+  useEffect(async () => {
+
+
+    await loadBlockchainData()
+  }, [address])
 
   const loadBlockchainData = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
 
-    const signer = provider.getSigner()
+    await window.ethereum.enable()
 
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const signer = provider.getSigner()
+
+      const _address = await provider.listAccounts()
+      setAddress(_address[0])
+    
     const myeAddress = '0x643549805E622770Fc3200C3cdA83d91C108BFa8'
 
     const myeAbi = [
@@ -24,17 +36,19 @@ function App() {
 
     const myeContract = new ethers.Contract(myeAddress,myeAbi,provider)
 
-    const balanceOf = await myeContract.balanceOf('0x892a1AdA292E3e04b93d430608A93D19EB81378E') 
+    const balanceOf = await myeContract.balanceOf(_address[0]) 
 
     setBalance(ethers.utils.formatEther(balanceOf))
-
-    console.log(window.ethereum)
   }
 
   return (
-    <div>
-      {balance}
-    </div>
+    <React.Fragment>
+        <NavBar/>
+
+        <Main/>
+
+    </React.Fragment>
+    
   );
 }
 
