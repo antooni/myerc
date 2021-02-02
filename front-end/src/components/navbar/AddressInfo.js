@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { Flex, Blockie, Box } from "rimble-ui"
+import { Flex, Blockie, Box, Text } from "rimble-ui"
 
 const AddressInfo = () => {
     return (
-        <Flex>
-            <Box width = {1/3}>
+        <Flex height={"100%"} alignItems={"center"}>
+            <Flex width = {1/3} justifyContent='right '>
                 <Blockie
                 opts={{
                     seed: "foo",
@@ -16,12 +16,11 @@ const AddressInfo = () => {
                     spotcolor: "#000"
                 }}
                 />
-            </Box>
+            </Flex>
             
-            <Box width = {2/3}>
-                <span>
-                0x892a1AdA292E3e04b93d430608A93D19EB81378E
-                </span>
+            <Box width = {2/3} color='white'>
+                
+                <Text.span fontWeight={"bold"} fontFamily='Arial'>0x892a1AdA292E3e04b93d430608A93D19EB81378E</Text.span>
             
             </Box>
             

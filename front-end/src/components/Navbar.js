@@ -9,7 +9,7 @@ import AddressInfo from './navbar/AddressInfo'
 const NavBar = () => {
     return(
         //Flex is a wrapper for a whole navbar width 100%
-        <Flex width={1}>
+        <Flex width={1} bg='primary'>
 
             <Box width={1/3}>
                 <Brand />

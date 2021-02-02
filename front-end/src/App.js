@@ -15,7 +15,7 @@ function App() {
   useEffect(async () => {
 
 
-    await loadBlockchainData()
+    //await loadBlockchainData()
   }, [address])
 
   const loadBlockchainData = async () => {

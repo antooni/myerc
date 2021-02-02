@@ -1,10 +1,15 @@
 import React from 'react'
+import { Flex } from 'rimble-ui'
 
 const Brand = () => {
     return (
-        <div>
-            MYE Wallet
-        </div>
+        <Flex height={"100%"} alignItems={"center"} color={"white"} fontFamily={"Arial Black"}>
+            <span>
+                MYE Wallet
+            </span>
+
+        </Flex>
+        
     )
 
 }
