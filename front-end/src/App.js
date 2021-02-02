@@ -1,22 +1,24 @@
 import './App.css';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
 import { ethers } from "ethers";
-import { Card, EthAddress, Box, MetaMaskButton } from 'rimble-ui';
+
 import NavBar from './components/Navbar';
 import Main from './components/Main'
+import ConnectionStatus from './components/ConnectionStatus'
 
 
 function App() {
 
   const [balance, setBalance] = useState('')
   const [address, setAddress] = useState('')
+  const isMetamaskConnected = React.createContext(false)
 
   useEffect(async () => {
 
 
     //await loadBlockchainData()
-  }, [address])
+  }, [])
 
   const loadBlockchainData = async () => {
 
@@ -43,7 +45,10 @@ function App() {
 
   return (
     <React.Fragment>
+
         <NavBar/>
+
+        <ConnectionStatus />
 
         <Main/>
 

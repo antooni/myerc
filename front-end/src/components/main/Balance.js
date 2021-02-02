@@ -5,7 +5,7 @@ import {Box, Card} from 'rimble-ui'
 
 const Balance = () => {
     return (
-        <Box width={1}>
+        <Box width={1} pt={20} pb={20}>
             <Box width={1}>
                 BALANCE
             </Box>

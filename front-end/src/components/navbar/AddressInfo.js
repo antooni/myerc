@@ -18,7 +18,7 @@ const AddressInfo = () => {
                 />
             </Flex>
             
-            <Box width = {2/3} color='white'>
+            <Box width = {2/3} color='white' pl={3}>
                 
                 <Text.span fontWeight={"bold"} fontFamily='Arial'>0x892a1AdA292E3e04b93d430608A93D19EB81378E</Text.span>
             
