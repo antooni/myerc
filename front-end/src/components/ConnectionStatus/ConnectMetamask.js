@@ -1,7 +1,7 @@
 import MetaMaskOnboarding from '@metamask/onboarding';
 import React from 'react';
 
-import { MetaMaskButton } from 'rimble-ui';
+import { MetaMaskButton, Text } from 'rimble-ui';
 import { ethers } from "ethers";
 
 const ONBOARD_TEXT = 'Click here to install MetaMask!';
@@ -59,7 +59,7 @@ const ConnectMetamask = (props) => {
   };
   return (
     <MetaMaskButton.Outline disabled={isDisabled} onClick={onClick} /* style={{display:"none"}} */>
-      {buttonText}
+      <Text>{buttonText}</Text>
     </MetaMaskButton.Outline>
   );
 }

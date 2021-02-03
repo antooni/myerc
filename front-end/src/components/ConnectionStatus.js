@@ -27,7 +27,7 @@ const ConnectionStatus = (props) => {
             <Flex width={1} justifyContent='center'  pt={10} pb={10}>
                 <Flex width={8/10} flexWrap='wrap' >
                     <Box width={1}>
-                        STATUS
+                        <Text>STATUS</Text>
                     </Box>
                     <Flex alignItems={"center"} width={4/10} >
                         <Icon color={CONNECTION_COLOR} name={CONNECTION_ICON} /> 

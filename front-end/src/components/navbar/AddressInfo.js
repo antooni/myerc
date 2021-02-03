@@ -20,7 +20,7 @@ const AddressInfo = (props) => {
             
             <Box width = {2/3} color='white' pl={3}>
                 
-                <Text.span fontWeight={"bold"} fontFamily='Arial'>{props.address}</Text.span>
+                <Text fontWeight={"bold"} fontFamily='Arial'>{props.address}</Text>
             
             </Box>
             
