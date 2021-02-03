@@ -35,7 +35,7 @@ const Send = (props) => {
 
     return (
         <React.Fragment>
-            <Button disabled={props.isDisabled} onClick={openModal}/* onClick={() => props.transfer('0x4Ff16925336634E7b368eAF1094e77aC8F427175',100)} */>Send</Button>
+            <Button disabled={props.isDisabled} onClick={openModal}/* onClick={() => props.transfer('0x4Ff16925336634E7b368eAF1094e77aC8F427175',100)} */><Text>Send</Text></Button>
 
             <Modal isOpen={isOpen}>
                 <Form onSubmit={handleSubmit}>

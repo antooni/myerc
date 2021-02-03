@@ -15,7 +15,7 @@ const History = () => {
 
             <Flex width={1} justifyContent='center'>
                 <Button>
-                    view more
+                    <Text>view more</Text>
                 </Button>
             </Flex>
         </React.Fragment>

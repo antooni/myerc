@@ -10,7 +10,7 @@ const Balance = (props) => {
                 <Text>BALANCE</Text>
             </Box>
             <Box width={1}>
-                <Card textAlign='center'>{props.balance} PZP</Card>
+                <Card textAlign='center'><Text>{props.balance} PZP</Text></Card>
             </Box>
         </Box>
     )

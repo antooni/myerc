@@ -12,7 +12,7 @@ const NavBar = (props) => {
         <Flex width={1} bg='primary' pt={10} pb={10}>
 
             <Box width={1/3}>
-                <Brand />
+                <Brand/>
             </Box>
 
             <Box width={1/3}></Box>

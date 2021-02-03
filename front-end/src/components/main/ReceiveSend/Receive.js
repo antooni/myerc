@@ -18,7 +18,7 @@ const Receive = (props) => {
 
     return (
         <React.Fragment>
-            <Button disabled={props.isDisabled} onClick={openModal}/* onClick={() => props.transfer('0x4Ff16925336634E7b368eAF1094e77aC8F427175',100)} */>Receive</Button>
+            <Button disabled={props.isDisabled} onClick={openModal}/* onClick={() => props.transfer('0x4Ff16925336634E7b368eAF1094e77aC8F427175',100)} */><Text>Receive</Text></Button>
 
             <Modal isOpen={isOpen}>
                 <Card width={"420px"} p={0}>
@@ -35,7 +35,7 @@ const Receive = (props) => {
                     />
 
                     <Box p={4} mb={3}>
-                        <Heading.h3>Receive tokens</Heading.h3>
+                        <Heading.h3><Text>Receive tokens</Text></Heading.h3>
                         <Box mb={20}>
                             <Text>This is your address</Text>
                             <EthAddress mt={30} address={props.address} />
@@ -51,8 +51,7 @@ const Receive = (props) => {
                     borderColor={"#E8E8E8"}
                     justifyContent={"flex-end"}
                     >
-                        <Button.Outline onClick={closeModal}>Cancel</Button.Outline>
-                        <Button type="submit" ml={3}>Send</Button>
+                        <Button.Outline onClick={closeModal}><Text>Close</Text></Button.Outline>
                 
                     </Flex>
                 </Card>
