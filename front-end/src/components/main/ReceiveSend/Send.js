@@ -56,22 +56,28 @@ const Send = (props) => {
                         <Heading.h3>Send tokens</Heading.h3>
                         <Box mb={20}>
                             <Text>Recipient</Text>
+                            <Text>
                             <Input
                             onChange={handleInputAddress}
                             type="text"
                             required={true}
                             placeholder="e.g. 0xAc03BB73b6a9e108530AFf4Df5077c2B3D481e5A"
                             />
+                            </Text>
+                            
                         </Box>
                         
 
                         <Text>Amount</Text>
+                        <Text>
                         <Input 
                         onChange={handleInputValue}
                         type="number" 
                         required={true} 
                         placeholder="e.g. 17" 
                         />
+                        </Text>
+                        
 
                     </Box>
 
