@@ -7,16 +7,16 @@ import History from './main/History'
 import ReceiveSend from './main/ReceiveSend'
 
 
-const Main = () => {
+const Main = (props) => {
     return (
         <Flex width={1} justifyContent='center'>
 
             <Flex width={8/10} justifyContent='center' flexWrap='wrap'>
-                <Balance></Balance>
+                <Balance balance={props.balance}></Balance>
 
-                <ReceiveSend></ReceiveSend>
+                <ReceiveSend transfer={props.transfer} isDisabled={props.isDisabled} address={props.address}></ReceiveSend>
 
-                <History></History>
+                <History isDisabled={props.isDisabled}></History>
 
                 
             </Flex>

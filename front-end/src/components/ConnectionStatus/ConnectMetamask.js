@@ -2,12 +2,13 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 import React from 'react';
 
 import { MetaMaskButton } from 'rimble-ui';
+import { ethers } from "ethers";
 
 const ONBOARD_TEXT = 'Click here to install MetaMask!';
 const CONNECT_TEXT = 'Connect';
 const CONNECTED_TEXT = 'Connected';
 
-const OnboardingButton = () => {
+const ConnectMetamask = (props) => {
   const [buttonText, setButtonText] = React.useState(ONBOARD_TEXT);
   const [isDisabled, setDisabled] = React.useState(false);
   const [accounts, setAccounts] = React.useState([]);
@@ -24,6 +25,7 @@ const OnboardingButton = () => {
       if (accounts.length > 0) {
         setButtonText(CONNECTED_TEXT);
         setDisabled(true);
+        props.onChange(true);
         onboarding.current.stopOnboarding();
       } else {
         setButtonText(CONNECT_TEXT);
@@ -32,9 +34,25 @@ const OnboardingButton = () => {
     }
   }, [accounts]);
 
+  React.useEffect(() => {
+    function handleNewAccounts(newAccounts) {
+      setAccounts(newAccounts);
+    }
+    if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+      window.ethereum
+        .request({ method: 'eth_requestAccounts' })
+        .then(handleNewAccounts);
+      window.ethereum.on('accountsChanged', handleNewAccounts);
+      return () => {
+        window.ethereum.off('accountsChanged', handleNewAccounts);
+      };
+    }
+  }, []);
+
   const onClick = async () => {
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
       await window.ethereum.enable();
+      props.onChange(true);
     } else {
       onboarding.current.startOnboarding();
     }
@@ -42,8 +60,8 @@ const OnboardingButton = () => {
   return (
     <MetaMaskButton.Outline disabled={isDisabled} onClick={onClick} /* style={{display:"none"}} */>
       {buttonText}
-      </MetaMaskButton.Outline>
+    </MetaMaskButton.Outline>
   );
 }
 
-export default OnboardingButton
+export default ConnectMetamask

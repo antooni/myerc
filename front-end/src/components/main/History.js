@@ -9,16 +9,16 @@ const History = () => {
         <React.Fragment>
             <Box width={1} pt={20} pb={20}>
                 HISTORY
-                <Table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Value</th>
-                        <th>Recipient</th>
-                        <th>Time</th>
-                    </tr>
-                </thead>
-                    <HistoryLine></HistoryLine>
+                <Table width={1}>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Value</th>
+                            <th>Recipient</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    {/* <HistoryLine></HistoryLine> */}
                 </Table>
             </Box>
 

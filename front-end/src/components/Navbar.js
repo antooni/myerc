@@ -6,7 +6,7 @@ import Brand from './navbar/Brand'
 import AddressInfo from './navbar/AddressInfo'
 
 
-const NavBar = () => {
+const NavBar = (props) => {
     return(
         //Flex is a wrapper for a whole navbar width 100%
         <Flex width={1} bg='primary' pt={10} pb={10}>
@@ -18,7 +18,7 @@ const NavBar = () => {
             <Box width={1/3}></Box>
 
             <Box width={1/3}>
-                <AddressInfo />
+                <AddressInfo address={props.address}/>
             </Box>
         </Flex>
     )
